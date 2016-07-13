@@ -114,3 +114,4 @@ let student = Student(name: "Kenan", lastName: "Kahric", yearOfBirth: 1995, loca
 mirko.introduction()
 nedim.introduction()
 student.introduction()
+
