@@ -109,7 +109,8 @@ let iOSDevelopment = Course(teacher: mirko, courseName: "iOS Development")
 
 
 let courses = [iOSDevelopment, seo]
-let student = Student(name: "Kenan", lastName: "Kahric", yearOfBirth: 1995, location: Location(), attendingCourses: courses, grades: [10, 10, 8, 9, 9, 10])
+let grades = [10, 10, 8, 9, 9, 10]
+let student = Student(name: "Kenan", lastName: "Kahric", yearOfBirth: 1995, location: Location(), attendingCourses: courses, grades: grades)
 
 mirko.introduction()
 nedim.introduction()
