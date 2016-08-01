@@ -58,6 +58,28 @@ class Person {
     }
 }
 
+class Parent: Person {
+    var children:[Person]?
+    var savings: Double?
+    
+    init (name: String?, lastName: String?, yearOfBirth: Int?, location: Location, children: [Person]?, savings: Double?) {
+        
+        self.children = children
+        self.savings = savings
+        
+        super.init(name: name, lastName: lastName, yearOfBirth: yearOfBirth, location: location)
+    }
+    override func introduction() -> String {
+        if let children = children {
+            let intro = super.introduction() + "I'm parent of \(children.count) children "
+        } else {
+            let intro = super.introduction() + "I have no children "
+        }
+        
+        return intro
+    }
+}
+
 class Student: Person {
     var attendingCourses: [Course]?
     var grades: [Int]?
@@ -93,11 +115,27 @@ class Student: Person {
     }
     
     override func introduction() -> String {
-        if let attendingCourses = attendingCourses {
-            return "\(super.introduction()) I'm a student at \(faculty). My favourite course is \(attendingCourses.first!.aboutCourse())"
+        
+        var intString = super.introduction() + " I'm student at \(faculty). "
+        
+        if attendingCourses!.isEmpty {
+            intString += "[There is no courses you are attending ]"
+        } else {
+            intString += "My favourite course is" + " " + attendingCourses!.first!.aboutCourse() + " " + "and my average is \(averageGrade!) "
         }
         
-        return "\(super.introduction()) I'm a student at \(faculty)."
+        guard(father?.savings != nil || mother?.savings != nil) else {
+            intString += "My parents are broke"
+            return intString
+        }
+        
+        if let fatherSavings = father?.savings {
+            intString += "My father have \(fatherSavings) savings"
+        }
+        if let motherSavings = mother?.savings {
+            intString += "My mother have \(motherSavings) savings"
+        }
+        return intString
     }
 }
 
@@ -111,6 +149,33 @@ let courses = [iOSDevelopment, seo]
 let grades = [10, 10, 8, 9, 9, 10]
 
 let student = Student(name: "Kenan", lastName: "Kahric", yearOfBirth: 1995, location: Location(), attendingCourses: courses, grades: grades)
+
+var randomSavings = Double(arc4random() % 10000)
+
+var brother = Person(
+    name: "Niko",
+    lastName: "Neznanovic",
+    yearOfBirth: 1990,
+    location: Location()
+)
+
+var father = Parent(
+    name: "Edin",
+    lastName: "Kahric",
+    yearOfBirth: 1969,
+    location: Location(),
+    children: [student, brother],
+    savings: randomSavings
+)
+
+var mother = Parent(
+    name: "Aida",
+    lastName: "Kahric",
+    yearOfBirth: 1970,
+    location: Location(),
+    children: [student, brother],
+    savings: randomSavings
+)
 
 mirko.introduction()
 nedim.introduction()
